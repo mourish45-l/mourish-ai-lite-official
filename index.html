@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mourish AI Lite — Private AI Chat, Five Agents, Client-Side Encryption</title>
+<meta name="description" content="Mourish AI Lite is a privacy-first AI chat workspace with five specialized agents, consent-based workspace integrations, and in-browser AES-256-GCM encryption with SHA-256 integrity hashes. No administrator can read your chats." />
+<meta name="theme-color" content="#f8fafc" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#64748b;
+    --border:#e2e8f0; --accent:#4f46e5; --accent-2:#0ea5e9;
+    --accent-soft:#eef2ff; --success:#059669; --warn:#b45309;
+    --radius:16px;
+    --shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  h1,h2,h3,h4{letter-spacing:-.02em;line-height:1.2}
+  code{font-family:'JetBrains Mono',monospace;font-size:.82em;background:#f1f5f9;padding:2px 6px;border-radius:6px;color:#334155}
+
+  /* ---------- NAV ---------- */
+  nav{position:sticky;top:0;z-index:60;background:rgba(248,250,252,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;gap:20px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.02rem;color:var(--text)}
+  .logo:hover{text-decoration:none}
+  .logo-mark{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-weight:800;font-size:.95rem}
+  .nav-links{display:flex;align-items:center;gap:26px}
+  .nav-links a{color:var(--muted);font-size:.88rem;font-weight:500}
+  .nav-links a:hover{color:var(--text);text-decoration:none}
+  .nav-links a.active{color:var(--text);font-weight:600}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:12px;font-weight:600;font-size:.88rem;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,background .15s ease,border-color .15s ease;font-family:inherit}
+  .btn:hover{text-decoration:none;transform:translateY(-1px)}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.25)}
+  .btn-primary:hover{background:#4338ca}
+  .btn-ghost{background:#fff;color:var(--text);border-color:var(--border)}
+  .btn-ghost:hover{border-color:#cbd5e1}
+  .btn-sm{padding:8px 15px;font-size:.82rem}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:76px 0 60px;text-align:center}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:.78rem;font-weight:600;margin-bottom:24px;border:1px solid #e0e7ff}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px rgba(5,150,105,.16)}
+  h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:800;margin-bottom:20px}
+  .grad{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:1.08rem;color:var(--muted);max-width:660px;margin:0 auto 30px}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:34px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:720px;margin:0 auto}
+  .stat{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 12px;box-shadow:var(--shadow)}
+  .stat b{display:block;font-size:1.15rem;font-weight:800;letter-spacing:-.02em}
+  .stat span{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:60px 0}
+  .sec-head{text-align:center;max-width:680px;margin:0 auto 40px}
+  .sec-head h2{font-size:clamp(1.5rem,3vw,2.05rem);font-weight:800;margin-bottom:12px}
+  .sec-head p{color:var(--muted);font-size:.98rem}
+  .eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+
+  .grid{display:grid;gap:20px}
+  .g5{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:transform .2s ease,border-color .2s ease}
+  .card:hover{transform:translateY(-3px);border-color:#cbd5e1}
+  .card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+  .card p{font-size:.86rem;color:var(--muted);margin-bottom:0}
+  .agent-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;margin-bottom:14px}
+  .card ul{margin:12px 0 0 18px;font-size:.83rem;color:var(--muted)}
+  .card li{margin-bottom:4px}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;counter-reset:step}
+  .step{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:relative}
+  .step::before{counter-increment:step;content:counter(step);position:absolute;top:-14px;left:24px;width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+  .step h3{font-size:.95rem;margin:14px 0 6px;font-weight:700}
+  .step p{font-size:.85rem;color:var(--muted)}
+
+  /* ---------- SECURITY ---------- */
+  .sec-block{background:linear-gradient(180deg,#fff,#f1f5f9);border:1px solid var(--border);border-radius:24px;padding:48px 40px}
+  .sec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:26px;margin-top:34px}
+  .sec-item{display:flex;gap:13px;align-items:flex-start}
+  .sec-check{flex-shrink:0;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#ecfdf5;color:var(--success);font-weight:800;font-size:.8rem}
+  .sec-item h4{font-size:.92rem;font-weight:700;margin-bottom:3px}
+  .sec-item p{font-size:.82rem;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;margin:18px 0 0;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  th{background:#f8fafc;font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:none}
+  .callout{background:#fffbeb;border:1px solid #fde68a;border-left:3px solid var(--warn);border-radius:12px;padding:16px 20px;margin-top:20px;font-size:.86rem;color:#78350f}
+  .callout strong{display:block;margin-bottom:3px;color:#92400e}
+
+  /* ---------- DEMO ---------- */
+  .demo{background:#fff;border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+  .demo-head{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .demo-head h3{font-size:.92rem;font-weight:700}
+  .badge{font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:999px;background:#ecfdf5;color:var(--success);letter-spacing:.03em}
+  .demo-body{padding:24px;display:grid;gap:16px}
+  .agent-pills{display:flex;gap:8px;flex-wrap:wrap}
+  .apill{padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:#fff;font-size:.78rem;font-weight:500;cursor:pointer;color:var(--muted);transition:all .15s;font-family:inherit}
+  .apill:hover{border-color:#cbd5e1}
+  .apill.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .field{display:grid;gap:6px}
+  .field label{font-size:.76rem;font-weight:600;color:var(--muted)}
+  textarea,input[type=password],input[type=text]{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:12px;font-family:inherit;font-size:.88rem;background:#f8fafc;color:var(--text)}
+  textarea{resize:vertical}
+  textarea:focus,input:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .out{background:#0f172a;border-radius:12px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#94a3b8;overflow-x:auto;white-space:pre-wrap;word-break:break-all;line-height:1.75}
+  .out .k{color:#38bdf8}.out .v{color:#e2e8f0}.out .ok{color:#4ade80}.out .bad{color:#f87171}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+  /* ---------- INTEGRATIONS ---------- */
+  .integ{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;font-size:.86rem}
+  .integ .glyph{flex-shrink:0;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+  .integ b{display:block;font-size:.88rem;margin-bottom:2px}
+  .integ span{color:var(--muted);font-size:.82rem}
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:780px;margin:0 auto;display:grid;gap:12px}
+  details{background:#fff;border:1px solid var(--border);border-radius:14px;padding:0;box-shadow:var(--shadow);overflow:hidden}
+  summary{cursor:pointer;padding:16px 20px;font-weight:600;font-size:.92rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:1.1rem;color:var(--muted);font-weight:700}
+  details[open] summary::after{content:"–"}
+  details p{padding:0 20px 18px;font-size:.87rem;color:var(--muted)}
+
+  /* ---------- MODERN FOOTER ---------- */
+  .site-footer{margin-top:40px;background:#fff;border-top:1px solid var(--border)}
+  .footer-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:34px 32px;border-radius:22px;background:linear-gradient(120deg,#eef2ff,#e0f2fe);border:1px solid #e0e7ff;margin:48px 0 44px}
+  .footer-cta h2{font-size:1.2rem;font-weight:800;margin-bottom:4px}
+  .footer-cta p{font-size:.88rem;color:#475569;margin:0}
+  .footer-cta-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.3fr;gap:36px;padding-bottom:40px}
+  .footer-brand p{font-size:.85rem;color:var(--muted);margin:12px 0 16px;max-width:280px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font-size:.68rem;font-weight:600;padding:4px 10px;border-radius:999px;background:#f1f5f9;color:#475569;border:1px solid var(--border)}
+  .footer-grid h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;font-weight:700}
+  .footer-grid ul{list-style:none;display:grid;gap:9px}
+  .footer-grid li{font-size:.86rem}
+  .footer-grid li a{color:#475569}
+  .footer-grid li a:hover{color:var(--accent);text-decoration:none}
+  .footer-contact a{font-weight:600;color:var(--text);word-break:break-all}
+  .footer-contact small{display:block;font-size:.76rem;color:var(--muted);margin-top:8px}
+  .footer-bottom{border-top:1px solid var(--border);padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
+  .footer-bottom .legal-mini{display:flex;gap:18px;flex-wrap:wrap}
+  .footer-bottom a{color:var(--muted)}
+  .footer-bottom a:hover{color:var(--text);text-decoration:none}
+  .trademark-note{font-size:.72rem;color:#94a3b8;padding-bottom:22px}
+
+  @media(max-width:860px){.footer-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){
+    .nav-links a:not(.btn){display:none}
+    .sec-block{padding:32px 22px}
+    .hero{padding:52px 0 36px}
+    .footer-grid{grid-template-columns:1fr}
+    .footer-cta{padding:26px 22px}
+  }
+</style>
+</head>
+<body id="top">
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><span class="logo-mark">M</span> Mourish AI Lite</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="#agents">Agents</a>
+      <a href="#security">Security</a>
+      <a href="#demo">Demo</a>
+      <a href="#faq">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="#demo" class="btn btn-primary btn-sm" style="color: #ffffff">Try it</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <span class="pill"><span class="dot"></span> Runs at mourish-ai-lite.vercel.app</span>
+    <h1>Private AI chat.<br><span class="grad">No one else can read it.</span></h1>
+    <p class="sub">
+      Mourish AI Lite is a small, fast workspace with five specialised agents, consent-based
+      workspace integrations, and encryption that happens inside your browser — before anything
+      is stored. Messages are sealed with AES-256-GCM and fingerprinted with SHA-256, so the
+      server holds only ciphertext and hashes. That includes us.
+    </p>
+    <div class="hero-cta">
+      <a href="#demo" class="btn btn-primary">Open the live demo</a>
+      <a href="#security" class="btn btn-ghost">See the security model</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>5</b><span>AI agents</span></div>
+      <div class="stat"><b>256-bit</b><span>AES-GCM keys</span></div>
+      <div class="stat"><b>100k</b><span>PBKDF2 iterations</span></div>
+      <div class="stat"><b>0</b><span>Admin backdoors</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= WHAT IT IS ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Overview</span>
+      <h2>A small tool with one opinion: your chats are yours</h2>
+      <p>
+        Most chatbots ask you to trust a policy page. Mourish AI Lite removes the need for that trust
+        by making the encryption happen on your device. We built it for people who want a capable
+        assistant without handing over a readable transcript of their work, health notes, drafts, or code.
+      </p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <h3>Encrypted before it leaves</h3>
+        <p>Your PIN is turned into a key locally. The key encrypts the message. Only the encrypted result travels.</p>
+      </div>
+      <div class="card">
+        <h3>Honest about limits</h3>
+        <p>Hashing proves nothing changed. Encryption hides content. We keep the two separate and say so plainly.</p>
+      </div>
+      <div class="card">
+        <h3>Consent-first integrations</h3>
+        <p>Connected workspace data is only read or acted on when you ask for it in a message. Never in the background.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AGENTS ================= -->
+<section id="agents">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Agents</span>
+      <h2>Five agents, one session</h2>
+      <p>Each agent runs a different instruction set, so you get a different voice and a different style of reasoning. Switch at any point; the conversation stays put.</p>
+    </div>
+    <div class="grid g5">
+      <div class="card">
+        <div class="agent-icon" style="background:#eef2ff;color:#4f46e5">✳</div>
+        <h3>General</h3>
+        <p>Short answers, clear explanations, everyday drafting.</p>
+        <ul><li>Explains concepts</li><li>Plans small tasks</li><li>Rewrites text</li></ul>
+      </div>
+      <div class="card">
+        <div class="agent-icon" style="background:#ecfdf5;color:#059669">⌘</div>
+        <h3>Code</h3>
+        <p>Writes, reviews, and fixes code with an eye on edge cases.</p>
+        <ul><li>Debugging</li><li>Refactors</li><li>Tests and docs</li></ul>
+      </div>
+      <div class="card">
+        <div class="agent-icon" style="background:#eff6ff;color:#0ea5e9">◈</div>
+        <h3>Research</h3>
+        <p>Condenses long material into comparable, structured notes.</p>
+        <ul><li>Summaries</li><li>Comparisons</li><li>Key claims</li></ul>
+      </div>
+      <div class="card">
+        <div class="agent-icon" style="background:#fef3c7;color:#b45309">✎</div>
+        <h3>Writer</h3>
+        <p>Matches tone and length so drafts sound like you wrote them.</p>
+        <ul><li>Emails</li><li>Posts</li><li>Product copy</li></ul>
+      </div>
+      <div class="card">
+        <div class="agent-icon" style="background:#fdf2f8;color:#be185d">▤</div>
+        <h3>Analyst</h3>
+        <p>Turns numbers and tables into plain findings and next steps.</p>
+        <ul><li>Trends</li><li>Caveats</li><li>Recommendations</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works</span>
+      <h2>Three steps, no setup</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Pick an agent</h3>
+        <p>Choose the role that fits the task. You can change it between messages without losing context.</p>
+      </div>
+      <div class="step">
+        <h3>Write and set a PIN</h3>
+        <p>Type your message and choose a PIN. The PIN stays in your browser and is never transmitted or stored.</p>
+      </div>
+      <div class="step">
+        <h3>Encrypt, then send</h3>
+        <p>Your browser derives a key, encrypts the message, adds a SHA-256 fingerprint, and sends only the sealed result.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECURITY ================= -->
+<section id="security">
+  <div class="wrap">
+    <div class="sec-block">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="eyebrow">Security model</span>
+        <h2>Designed so administrators can't read your chats</h2>
+        <p>Encryption happens in your browser. The server receives sealed data, not readable text.</p>
+      </div>
+      <div class="sec-grid">
+        <div class="sec-item"><div class="sec-check">✓</div><div><h4>PBKDF2 key derivation</h4><p>Your PIN is stretched with 100,000 SHA-256 iterations and a random salt to build a 256-bit key.</p></div></div>
+        <div class="sec-item"><div class="sec-check">✓</div><div><h4>AES-256-GCM encryption</h4><p>Each message uses a fresh random IV. GCM also authenticates the ciphertext, so edits are detected.</p></div></div>
+        <div class="sec-item"><div class="sec-check">✓</div><div><h4>SHA-256 integrity hash</h4><p>A one-way fingerprint is stored per message so you can verify content was not altered.</p></div></div>
+        <div class="sec-item"><div class="sec-check">✓</div><div><h4>No plaintext on the server</h4><p>We receive ciphertext, IV, salt, and hash. There is no readable copy to leak.</p></div></div>
+        <div class="sec-item"><div class="sec-check">✓</div><div><h4>No admin key</h4><p>Staff can manage accounts but hold no decryption key. There is no backdoor to build or abuse.</p></div></div>
+        <div class="sec-item"><div class="sec-check">✓</div><div><h4>No silent data access</h4><p>Connected workspace data is read only when you ask for it in a message — never on a schedule.</p></div></div>
+      </div>
+
+      <table>
+        <thead><tr><th>Item</th><th>Stored on our servers</th><th>Stays on your device</th></tr></thead>
+        <tbody>
+          <tr><td>Message text</td><td>Never</td><td>Yes, until you clear it</td></tr>
+          <tr><td>Encrypted payload</td><td>Yes (ciphertext + IV + salt)</td><td>Temporarily</td></tr>
+          <tr><td>SHA-256 hash</td><td>Yes (one-way)</td><td>Recomputed on demand</td></tr>
+          <tr><td>Your PIN</td><td>Never</td><td>Only while the tab is open</td></tr>
+          <tr><td>Derived key</td><td>Never</td><td>Only in memory</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Honest limitation</strong>
+        If you forget your PIN, encrypted history cannot be recovered — by us or anyone else. That is the cost of a design without a master key. Store your PIN somewhere safe before you rely on this for long-term records.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DEMO ================= -->
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Live demo</span>
+      <h2>Run the encryption yourself</h2>
+      <p>Everything below runs in your browser with the built-in Web Crypto API. No message, PIN, or key is uploaded.</p>
+    </div>
+
+    <div class="demo">
+      <div class="demo-head">
+        <h3>Client-side encrypt and verify</h3>
+        <span class="badge">LOCAL ONLY</span>
+      </div>
+      <div class="demo-body">
+        <div class="agent-pills" id="pills">
+          <button class="apill on" data-a="General">General</button>
+          <button class="apill" data-a="Code">Code</button>
+          <button class="apill" data-a="Research">Research</button>
+          <button class="apill" data-a="Writer">Writer</button>
+          <button class="apill" data-a="Analyst">Analyst</button>
+        </div>
+
+        <div class="field">
+          <label for="msg">Your message</label>
+          <textarea id="msg" rows="3" placeholder="Example: Summarise this week's notes into three bullet points for my team."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="pin">Encryption PIN — used locally to derive your key, never sent</label>
+          <input id="pin" type="password" placeholder="Any PIN you can remember" autocomplete="off" />
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary btn-sm" id="encBtn">Encrypt and hash</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+        </div>
+
+        <div class="out" id="out">// Output appears here after you run the demo.</div>
+
+        <div class="field" style="margin-top:6px">
+          <label for="expect">Verify integrity — paste a SHA-256 hash to compare</label>
+          <input id="expect" type="text" placeholder="64-character hex hash" autocomplete="off" />
+        </div>
+        <div class="row">
+          <button class="btn btn-ghost btn-sm" id="verifyBtn">Verify hash</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTEGRATIONS ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Integrations</span>
+      <h2>Workspace access, only when you ask</h2>
+      <p>
+        Connect an account once and the assistant can act on it when a message requests it. It does not
+        read mail, files, or calendars in the background, and it does not build a profile from them.
+      </p>
+    </div>
+    <div class="grid g3">
+      <div class="integ"><div class="glyph">✉</div><div><b>Email drafting</b><span>Compose or reply when you ask, using the minimum scope needed.</span></div></div>
+      <div class="integ"><div class="glyph">▢</div><div><b>File storage</b><span>Read or save a specific file you name, nothing else.</span></div></div>
+      <div class="integ"><div class="glyph">▦</div><div><b>Calendar</b><span>Check availability or create an event you describe.</span></div></div>
+      <div class="integ"><div class="glyph">▤</div><div><b>Documents</b><span>Draft into a document you choose to share with the session.</span></div></div>
+      <div class="integ"><div class="glyph">▥</div><div><b>Spreadsheets</b><span>Read a named range and summarise it on request.</span></div></div>
+      <div class="integ"><div class="glyph">⚿</div><div><b>Sign-in</b><span>Optional. Chat works without connecting any account.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Questions</span>
+      <h2>Straight answers</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Can Mourish AI or an administrator read my messages?</summary>
+        <p>No. The key is derived from your PIN inside your browser and never transmitted. What reaches the server is encrypted data plus a one-way hash. Without your PIN there is nothing readable to open.</p>
+      </details>
+      <details>
+        <summary>Does the assistant read my connected accounts on its own?</summary>
+        <p>No. Workspace data is only read or acted on when you explicitly ask for it in a message, such as "summarise the document I shared". Nothing is fetched in the background.</p>
+      </details>
+      <details>
+        <summary>Is SHA-256 the same as encryption?</summary>
+        <p>No, and we do not pretend otherwise. SHA-256 is a one-way fingerprint used to detect changes. Confidentiality comes from AES-256-GCM. We use both, for different jobs.</p>
+      </details>
+      <details>
+        <summary>What happens if I forget my PIN?</summary>
+        <p>Your encrypted history becomes unreadable. We cannot reset it because we never held it. Keep a copy of your PIN in a password manager.</p>
+      </details>
+      <details>
+        <summary>Do you train models on my messages?</summary>
+        <p>No. Content is not used to train models and is not sold or used for advertising.</p>
+      </details>
+      <details>
+        <summary>Do I need an account?</summary>
+        <p>No. You can use the demo and basic chat without signing in. An account is only needed if you want to keep encrypted history or connect a workspace account.</p>
+      </details>
+      <details>
+        <summary>How do I contact you?</summary>
+        <p>Email <a href="mailto:nexasblockify@gmail.com">nexasblockify@gmail.com</a>. We aim to reply within two business days.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MODERN FOOTER ================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-cta">
+      <div>
+        <h2>Start a private conversation</h2>
+        <p>Five agents, in-browser encryption, and no readable copy on our side.</p>
+      </div>
+      <div class="footer-cta-actions">
+        <a href="#demo" class="btn btn-primary btn-sm">Open the demo</a>
+        <a href="mailto:nexasblockify@gmail.com" class="btn btn-ghost btn-sm">Email the team</a>
+      </div>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-mark">M</span> Mourish AI Lite</a>
+        <p>A privacy-first chat workspace. Your messages are sealed on your device before they reach a server.</p>
+        <div class="chips">
+          <span class="chip">Zero-knowledge</span>
+          <span class="chip">Client-side crypto</span>
+          <span class="chip">Consent-first access</span>
+        </div>
+      </div>
+
+      <div>
+        <h3>Product</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#agents">Agents</a></li>
+          <li><a href="index.html#security">Security model</a></li>
+          <li><a href="index.html#demo">Live demo</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html#cookies">Cookies</a></li>
+          <li><a href="privacy.html#rights">Your rights</a></li>
+          <li><a href="terms.html#acceptable">Acceptable use</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="mailto:nexasblockify@gmail.com">nexasblockify@gmail.com</a></li>
+        </ul>
+        <small>General, privacy, and legal enquiries all reach this address. Typical reply within two business days.</small>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span> <span id="yr"></span> Mourish AI Lite. A Nexasblockify branch.</span>
+      <div class="legal-mini">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:nexasblockify@gmail.com">Contact</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+    <p class="trademark-note">
+      All text and artwork on this site are original to Mourish AI Lite. Third-party product names, if mentioned,
+      are the trademarks of their respective owners and are used only to describe compatibility.
+    </p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+document.querySelectorAll('.apill').forEach(function(p){
+  p.addEventListener('click', function(){
+    document.querySelectorAll('.apill').forEach(function(x){ x.classList.remove('on'); });
+    p.classList.add('on');
+  });
+});
+
+var enc = new TextEncoder();
+function toHex(buf){
+  var b = new Uint8Array(buf), s = '';
+  for (var i = 0; i < b.length; i++) s += b[i].toString(16).padStart(2,'0');
+  return s;
+}
+async function sha256Hex(str){
+  return toHex(await crypto.subtle.digest('SHA-256', enc.encode(str)));
+}
+async function deriveKey(pin, salt){
+  var km = await crypto.subtle.importKey('raw', enc.encode(pin), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey(
+    { name:'PBKDF2', salt: salt, iterations: 100000, hash:'SHA-256' },
+    km,
+    { name:'AES-GCM', length: 256 },
+    false,
+    ['encrypt']
+  );
+}
+
+var out = document.getElementById('out');
+var lastHash = '';
+
+document.getElementById('encBtn').addEventListener('click', async function(){
+  var msg = document.getElementById('msg').value.trim();
+  var pin = document.getElementById('pin').value;
+  var agent = document.querySelector('.apill.on').dataset.a;
+
+  if(!msg){ out.textContent = '// Please type a message first.'; return; }
+  if(!pin){ out.textContent = '// Please enter a PIN so a key can be derived locally.'; return; }
+
+  out.textContent = '// Working…';
+  try{
+    var salt = crypto.getRandomValues(new Uint8Array(16));
+    var iv = crypto.getRandomValues(new Uint8Array(12));
+    var key = await deriveKey(pin, salt);
+    var cipher = await crypto.subtle.encrypt({ name:'AES-GCM', iv: iv }, key, enc.encode(msg));
+    var cipherHex = toHex(cipher);
+    lastHash = await sha256Hex(msg);
+    var keyId = await sha256Hex(pin + toHex(salt));
+
+    out.innerHTML =
+      '<span class="k">agent</span>:   <span class="v">' + agent + '</span>\n' +
+      '<span class="k">salt</span>:    <span class="v">' + toHex(salt) + '</span>\n' +
+      '<span class="k">iv</span>:      <span class="v">' + toHex(iv) + '</span>\n' +
+      '<span class="k">keyId</span>:   <span class="v">' + keyId.slice(0,32) + '…</span>  <span class="ok">PBKDF2-SHA256, 100k iterations</span>\n' +
+      '<span class="k">sha256</span>:  <span class="v">' + lastHash + '</span>\n' +
+      '<span class="k">payload</span>: <span class="v">' + cipherHex.slice(0,120) + (cipherHex.length > 120 ? '…' : '') + '</span>\n\n' +
+      '<span class="ok">// Encrypted locally. The lines above are what a server would receive.</span>\n' +
+      '<span class="ok">// Plaintext, PIN, and key were never transmitted.</span>';
+  }catch(e){
+    out.textContent = '// Error: ' + e.message;
+  }
+});
+
+document.getElementById('verifyBtn').addEventListener('click', async function(){
+  var msg = document.getElementById('msg').value.trim();
+  var expect = document.getElementById('expect').value.trim().toLowerCase();
+  if(!msg){ out.textContent = '// Enter a message first, then verify its hash.'; return; }
+  if(!/^[0-9a-f]{64}$/.test(expect)){ out.textContent = '// A SHA-256 hash is exactly 64 hexadecimal characters.'; return; }
+  var actual = await sha256Hex(msg);
+  out.innerHTML = actual === expect
+    ? '<span class="ok">// MATCH — the message is unchanged and matches the hash you supplied.</span>\n<span class="k">sha256</span>: <span class="v">' + actual + '</span>'
+    : '<span class="bad">// NO MATCH — the message differs from the one that produced that hash.</span>\n<span class="k">expected</span>: <span class="v">' + expect + '</span>\n<span class="k">actual</span>:   <span class="v">' + actual + '</span>';
+});
+
+document.getElementById('clearBtn').addEventListener('click', function(){
+  document.getElementById('msg').value = '';
+  document.getElementById('pin').value = '';
+  document.getElementById('expect').value = '';
+  lastHash = '';
+  out.textContent = '// Output appears here after you run the demo.';
+});
+</script>
+</body>
+</html>

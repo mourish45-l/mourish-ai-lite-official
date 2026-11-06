@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terms of Service — Mourish AI Lite</title>
+<meta name="description" content="Terms of Service for Mourish AI Lite: zero-knowledge chat, five AI agents, consent-based integrations, and your responsibilities." />
+<meta name="theme-color" content="#f8fafc" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f8fafc; --card:#fff; --text:#0f172a; --muted:#64748b;
+    --border:#e2e8f0; --accent:#4f46e5; --accent-2:#0ea5e9;
+    --accent-soft:#eef2ff; --success:#059669; --warn:#b45309; --danger:#b91c1c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  code{font-family:'JetBrains Mono',monospace;font-size:.82em;background:#f1f5f9;padding:2px 6px;border-radius:6px;color:#334155}
+
+  nav{position:sticky;top:0;z-index:60;background:rgba(248,250,252,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;gap:20px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--text);font-size:1.02rem}
+  .logo:hover{text-decoration:none}
+  .logo-mark{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-weight:800;font-size:.95rem}
+  .nav-links{display:flex;align-items:center;gap:26px}
+  .nav-links a{color:var(--muted);font-size:.88rem;font-weight:500}
+  .nav-links a:hover{color:var(--text);text-decoration:none}
+  .nav-links a.active{color:var(--text);font-weight:600}
+  .btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 20px;border-radius:12px;font-weight:600;font-size:.88rem;border:1px solid transparent;cursor:pointer;font-family:inherit}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:#4338ca;text-decoration:none}
+  .btn-ghost{background:#fff;color:var(--text);border-color:var(--border)}
+  .btn-sm{padding:8px 15px;font-size:.82rem}
+
+  .page{max-width:790px;margin:0 auto;padding:52px 24px 72px}
+  .page-head{padding-bottom:26px;border-bottom:1px solid var(--border);margin-bottom:32px}
+  .eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  h1{font-size:clamp(1.9rem,4vw,2.5rem);font-weight:800;line-height:1.15;margin-bottom:12px}
+  .meta{font-size:.84rem;color:var(--muted)}
+  .summary{background:var(--accent-soft);border:1px solid #e0e7ff;border-radius:16px;padding:24px;margin-bottom:32px}
+  .summary h2{font-size:.98rem;margin-bottom:12px;color:var(--accent)}
+  .summary ul{list-style:none;display:grid;gap:9px}
+  .summary li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem}
+  .summary li::before{content:"→";color:var(--accent);font-weight:800;flex-shrink:0}
+  .toc{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:38px}
+  .toc h3{margin-bottom:10px;font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+  .toc ol{margin-left:18px;font-size:.88rem;color:#475569}
+  .toc li{margin-bottom:5px}
+
+  h2{font-size:1.2rem;font-weight:700;margin:38px 0 10px;scroll-margin-top:84px}
+  h3{font-size:.98rem;font-weight:600;margin:18px 0 6px}
+  p{margin-bottom:13px;color:#334155}
+  ul,ol{margin:0 0 15px 22px;color:#334155}
+  li{margin-bottom:5px}
+  .callout{background:#fff;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:18px 0;font-size:.9rem}
+  .callout strong{display:block;margin-bottom:4px}
+  .callout.warn{background:#fffbeb;border-color:#fde68a;border-left-color:var(--warn);color:#78350f}
+  .callout.warn strong{color:#92400e}
+  .callout.danger{background:#fef2f2;border-color:#fecaca;border-left-color:var(--danger);color:#7f1d1d}
+  .callout.danger strong{color:#991b1b}
+
+  .site-footer{margin-top:40px;background:#fff;border-top:1px solid var(--border)}
+  .footer-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:34px 32px;border-radius:22px;background:linear-gradient(120deg,#eef2ff,#e0f2fe);border:1px solid #e0e7ff;margin:48px 0 44px}
+  .footer-cta h2{font-size:1.2rem;font-weight:800;margin-bottom:4px}
+  .footer-cta p{font-size:.88rem;color:#475569;margin:0}
+  .footer-cta-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.3fr;gap:36px;padding-bottom:40px}
+  .footer-brand p{font-size:.85rem;color:var(--muted);margin:12px 0 16px;max-width:280px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font-size:.68rem;font-weight:600;padding:4px 10px;border-radius:999px;background:#f1f5f9;color:#475569;border:1px solid var(--border)}
+  .footer-grid h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;font-weight:700}
+  .footer-grid ul{list-style:none;display:grid;gap:9px;margin:0}
+  .footer-grid li{font-size:.86rem;margin:0}
+  .footer-grid li a{color:#475569}
+  .footer-grid li a:hover{color:var(--accent);text-decoration:none}
+  .footer-contact small{display:block;font-size:.76rem;color:var(--muted);margin-top:8px}
+  .footer-bottom{border-top:1px solid var(--border);padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
+  .legal-mini{display:flex;gap:18px;flex-wrap:wrap}
+  .footer-bottom a{color:var(--muted)}
+  .footer-bottom a:hover{color:var(--text);text-decoration:none}
+  .trademark-note{font-size:.72rem;color:#94a3b8;padding-bottom:22px}
+
+  @media(max-width:860px){.footer-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){.nav-links a:not(.btn){display:none}.footer-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body id="top">
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><span class="logo-mark">M</span> Mourish AI Lite</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html" class="active">Terms</a>
+      <a href="index.html#demo" class="btn btn-primary btn-sm" style="color: #ffffff">Try it</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="page-head">
+    <span class="eyebrow">Legal</span>
+    <h1>Terms of Service</h1>
+    <p class="meta">Effective 1 January 2026 · Last reviewed 1 January 2026 · Applies to <code>mourish-ai-lite.vercel.app</code></p>
+  </div>
+
+  <div class="summary">
+    <h2>Key points</h2>
+    <ul>
+      <li>Use the service lawfully and only for content you have the right to process.</li>
+      <li>You own what you write; you are responsible for it.</li>
+      <li>Encryption is client-side: lose your PIN and your encrypted history is gone.</li>
+      <li>Connected accounts are touched only when your message asks for it.</li>
+      <li>AI output can be wrong. Check it before you rely on it.</li>
+      <li>Contact: <a href="mailto:nexasblockify@gmail.com">nexasblockify@gmail.com</a></li>
+    </ul>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#accept">Acceptance</a></li>
+      <li><a href="#eligibility">Eligibility</a></li>
+      <li><a href="#service">The service</a></li>
+      <li><a href="#accounts">Accounts and security</a></li>
+      <li><a href="#encryption">Encryption and your PIN</a></li>
+      <li><a href="#consent">Access only when you ask</a></li>
+      <li><a href="#acceptable">Acceptable use</a></li>
+      <li><a href="#thirdparty">Third-party services</a></li>
+      <li><a href="#content">Your content and licence</a></li>
+      <li><a href="#ip">Our intellectual property</a></li>
+      <li><a href="#ai">AI output disclaimer</a></li>
+      <li><a href="#fees">Fees</a></li>
+      <li><a href="#availability">Availability and changes</a></li>
+      <li><a href="#termination">Suspension and termination</a></li>
+      <li><a href="#warranty">Disclaimer of warranties</a></li>
+      <li><a href="#liability">Limitation of liability</a></li>
+      <li><a href="#indemnity">Indemnity</a></li>
+      <li><a href="#law">Governing law and disputes</a></li>
+      <li><a href="#general">General provisions</a></li>
+      <li><a href="#changes">Changes to these terms</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </div>
+
+  <h2 id="accept">1. Acceptance</h2>
+  <p>By accessing or using Mourish AI Lite (the "service"), you agree to these terms and to our <a href="privacy.html">Privacy Policy</a>. If you do not agree, please do not use the service.</p>
+
+  <h2 id="eligibility">2. Eligibility</h2>
+  <p>You must be at least 13 years old, or the minimum age required in your country, and legally able to enter into a contract. If you use the service on behalf of an organisation, you confirm you are authorised to accept these terms for it.</p>
+
+  <h2 id="service">3. The service</h2>
+  <p>Mourish AI Lite provides an AI chat interface with five specialised agents, optional integrations with accounts you choose to connect, and client-side encryption of message content. Features may be added, changed, or withdrawn. Some features may be marked as experimental and may behave unpredictably.</p>
+
+  <h2 id="accounts">4. Accounts and security</h2>
+  <ul>
+    <li>You may use basic chat without an account. Registering enables encrypted history and integrations.</li>
+    <li>Keep your sign-in credentials and your PIN private and separate from each other.</li>
+    <li>You are responsible for activity performed under your account.</li>
+    <li>Tell us promptly at <a href="mailto:nexasblockify@gmail.com">nexasblockify@gmail.com</a> if you believe your account has been compromised.</li>
+  </ul>
+
+  <h2 id="encryption">5. Encryption and your PIN</h2>
+  <p>Message content is encrypted in your browser using a key derived from your PIN through PBKDF2 with SHA-256, then sealed with AES-256-GCM and fingerprinted with a SHA-256 digest.</p>
+  <div class="callout danger">
+    <strong>No recovery, by design</strong>
+    We do not store your PIN or your derived key. If you forget your PIN, your encrypted history cannot be decrypted by you, by us, or by any administrator. There is no reset process. Store your PIN safely before relying on this for anything you may need later.
+  </div>
+  <div class="callout">
+    <strong>What hashing does and does not do</strong>
+    SHA-256 is a one-way fingerprint used to detect change. It does not hide content by itself. Confidentiality comes from AES-256-GCM. Do not treat a hash as encryption.
+  </div>
+
+  <h2 id="consent">6. Access only when you ask</h2>
+  <p>If you connect an account, the assistant reads or acts on that data <strong>only when your message explicitly requests an action</strong>. It does not sync, scan, or index your account in the background, and it does not build a profile from your data.</p>
+  <ul>
+    <li>You control which permissions you grant and may revoke them at any time with the provider.</li>
+    <li>You must have the right to access and act on any account you connect.</li>
+    <li>We may log the fact that an action occurred (for example, "event created") for security and support, but not the readable content beyond what is needed to complete and verify the action.</li>
+  </ul>
+
+  <h2 id="acceptable">7. Acceptable use</h2>
+  <p>You agree not to use the service to:</p>
+  <ul>
+    <li>Break any law, regulation, or court order.</li>
+    <li>Infringe intellectual property, privacy, or publicity rights.</li>
+    <li>Create or distribute malware, phishing material, or spam.</li>
+    <li>Harass, threaten, defame, or incite harm against anyone.</li>
+    <li>Produce or distribute content that sexually exploits minors.</li>
+    <li>Circumvent rate limits, security controls, or access restrictions.</li>
+    <li>Scrape, reverse engineer, or resell the service except where the law expressly permits it.</li>
+    <li>Process data you are not authorised to handle, including regulated data without a lawful basis.</li>
+    <li>Present AI output as professional legal, medical, or financial advice to others.</li>
+  </ul>
+  <p>We may suspend or close accounts that breach these rules, and may report unlawful activity where required.</p>
+
+  <h2 id="thirdparty">8. Third-party services</h2>
+  <p>Integrations rely on third-party platforms with their own terms. Your use of those platforms is governed by those terms, and you must comply with them. Product names mentioned on this site belong to their respective owners and are used only to describe compatibility. We are not responsible for third-party services, their availability, or their changes.</p>
+
+  <h2 id="content">9. Your content and licence</h2>
+  <h3>Ownership</h3>
+  <p>You keep all rights to the content you submit. We claim no ownership over your messages or files.</p>
+  <h3>Limited licence</h3>
+  <p>You grant us a narrow licence to process your content solely to operate the service: to store ciphertext, to transmit your request to the agent you selected, to generate a reply, and to carry out actions you explicitly request. This licence ends when the content is deleted, except where retention is required by law.</p>
+  <h3>Responsibility</h3>
+  <p>You confirm you have the rights needed to submit your content and to connect any account you use.</p>
+
+  <h2 id="ip">10. Our intellectual property</h2>
+  <p>The service's interface, written content, design, and code are original works owned by Mourish AI Lite and protected by intellectual property law. You may not copy, redistribute, or create derivative works from them without written permission, except for personal, non-commercial reference or as permitted by law.</p>
+
+  <h2 id="ai">11. AI output disclaimer</h2>
+  <p>AI output can be inaccurate, incomplete, out of date, or biased. It is not professional advice. <strong>Verify anything important before you rely on it</strong>, particularly for legal, medical, financial, safety, or employment decisions. You are responsible for the output you choose to use or share.</p>
+
+  <h2 id="fees">12. Fees</h2>
+  <p>Parts of the service are free. If paid features are offered, prices and terms will be shown before purchase. Unless the law requires otherwise, payments are non-refundable. We may change prices with reasonable notice before your next billing period.</p>
+
+  <h2 id="availability">13. Availability and changes</h2>
+  <p>We aim to keep the service running but do not guarantee uninterrupted availability. Maintenance, provider outages, and security incidents may cause downtime. We may modify or discontinue features; where a change materially reduces paid functionality, we will give reasonable notice.</p>
+
+  <h2 id="termination">14. Suspension and termination</h2>
+  <ul>
+    <li>You may stop using the service and delete your account at any time.</li>
+    <li>We may suspend or terminate access for breaches of these terms, security risk, non-payment, or legal requirement.</li>
+    <li>On termination, stored ciphertext is deleted. Export anything you need beforehand, since we cannot reconstruct it for you.</li>
+    <li>Provisions that by their nature should survive termination — including ownership, disclaimers, and liability limits — will continue to apply.</li>
+  </ul>
+
+  <h2 id="warranty">15. Disclaimer of warranties</h2>
+  <p>The service is provided "as is" and "as available", without warranties of any kind, whether express or implied, including merchantability, fitness for a particular purpose, accuracy, and non-infringement. We do not warrant that the service will be error-free, uninterrupted, or completely secure, or that AI output will be accurate.</p>
+
+  <h2 id="liability">16. Limitation of liability</h2>
+  <p>To the fullest extent permitted by law, Mourish AI Lite is not liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or for lost profits, revenue, data, goodwill, or business opportunity, arising from or related to your use of the service. Our total aggregate liability for all claims relating to the service will not exceed the greater of the amount you paid us in the twelve months before the event giving rise to the claim, or USD 50.</p>
+  <p>Nothing in these terms limits liability that cannot lawfully be limited, including for fraud or for death or personal injury caused by negligence.</p>
+
+  <h2 id="indemnity">17. Indemnity</h2>
+  <p>You agree to indemnify and hold harmless Mourish AI Lite from claims, losses, liabilities, and reasonable legal costs arising from your content, your connected accounts, or your breach of these terms or of applicable law.</p>
+
+  <h2 id="law">18. Governing law and disputes</h2>
+  <p>These terms are governed by the laws of your country of residence where consumer protection rules require it, and otherwise by the laws of the operator's principal place of business, without regard to conflict-of-law rules. Before starting formal proceedings, please contact <a href="mailto:nexasblockify@gmail.com">nexasblockify@gmail.com</a> so we can try to resolve the issue informally within 30 days. Nothing here prevents you from bringing a claim in a court that has mandatory jurisdiction over you.</p>
+
+  <h2 id="general">19. General provisions</h2>
+  <ul>
+    <li><strong>Entire agreement</strong> — these terms and the privacy policy are the whole agreement between us on this subject.</li>
+    <li><strong>Severability</strong> — if a provision is found unenforceable, the rest stays in effect and the provision is read as narrowly as possible.</li>
+    <li><strong>No waiver</strong> — failing to enforce a provision once does not waive it later.</li>
+    <li><strong>Assignment</strong> — you may not transfer your rights under these terms without our consent; we may transfer ours in a merger, acquisition, or asset sale, with notice.</li>
+    <li><strong>Force majeure</strong> — neither party is liable for delay caused by events beyond reasonable control.</li>
+    <li><strong>No agency</strong> — these terms do not create a partnership, agency, or employment relationship.</li>
+  </ul>
+
+  <h2 id="changes">20. Changes to these terms</h2>
+  <p>We may update these terms as the service develops. Material changes will be announced in the app and the review date above will change. If you continue using the service after an update, you accept the revised terms. If you do not agree, stop using the service and delete your account.</p>
+
+  <h2 id="contact">21. Contact</h2>
+  <p>Questions about these terms, notices, and legal enquiries: <a href="mailto:nexasblockify@gmail.com">nexasblockify@gmail.com</a>. We aim to reply within two business days.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-cta">
+      <div>
+        <h2>Start a private conversation</h2>
+        <p>Five agents, in-browser encryption, and no readable copy on our side.</p>
+      </div>
+      <div class="footer-cta-actions">
+        <a href="index.html#demo" class="btn btn-primary btn-sm">Open the demo</a>
+        <a href="mailto:nexasblockify@gmail.com" class="btn btn-ghost btn-sm">Email the team</a>
+      </div>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-mark">M</span> Mourish AI Lite</a>
+        <p>A privacy-first chat workspace. Your messages are sealed on your device before they reach a server.</p>
+        <div class="chips">
+          <span class="chip">Zero-knowledge</span>
+          <span class="chip">Client-side crypto</span>
+          <span class="chip">Consent-first access</span>
+        </div>
+      </div>
+      <div>
+        <h3>Product</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#agents">Agents</a></li>
+          <li><a href="index.html#security">Security model</a></li>
+          <li><a href="index.html#demo">Live demo</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html#cookies">Cookies</a></li>
+          <li><a href="privacy.html#rights">Your rights</a></li>
+          <li><a href="terms.html#acceptable">Acceptable use</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h3>Contact</h3>
+        <ul><li><a href="mailto:nexasblockify@gmail.com">nexasblockify@gmail.com</a></li></ul>
+        <small>General, privacy, and legal enquiries all reach this address. Typical reply within two business days.</small>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span> <span id="yr"></span> Mourish AI Lite. A Nexasblockify Branch.</span>
+      <div class="legal-mini">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:nexasblockify@gmail.com">Contact</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+    <p class="trademark-note">All text and artwork on this site are original to Mourish AI Lite. Third-party product names, if mentioned, are the trademarks of their respective owners and are used only to describe compatibility.</p>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
